@@ -2,6 +2,9 @@
 I am, by no means, a professional game developer or modder. Expect this to be poorly made, most likely poorly optimised, and buggy.  
 Emphasis on the buggy part. Never touched Visual Studio, let alone built a Class Library, before. Never touched C#.
 
+This mod is made for the 4.0.1 version of Casualties: Unknown, which is currently the latest version on the game's [Itch page](https://orsonik.itch.io/scav-prototype). Make sure this is the version of the game you have before continuing.<br>
+Downloadable [here](https://orsonik.itch.io/scav-prototype/download/eyJpZCI6MzIxNDQzOSwiZXhwaXJlcyI6MTc1ODgyMzQ4MX0%3d.bWj9Lv6KdmVaMJsIHZOA5Bqq0%2bg%3d) for free. Highly recommend you support the developer, or buy the game on Steam once it releases at the very least.
+
 # Getting Started
 * Download [BepInEx](https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.4), unpack in your game directory, remove non-core files if you wish. <br>
 <p align="center"><img width="631" height="295" alt="image" src="https://github.com/user-attachments/assets/cdf910ef-0384-49bf-bd2c-3343fad210a7" /></p>
