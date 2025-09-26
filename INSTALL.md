@@ -20,7 +20,7 @@ LogLevels = All
 
 <p align="center"><img width="989" height="634" alt="image" src="https://github.com/user-attachments/assets/c0301c68-6c64-4101-bd53-fbebe1dfd7bf" /></p>
 
-Drag-and-drop the downloaded DLL file into:
+* Drag-and-drop the downloaded DLL file into:
 
 ```
 CasualtiesUnknown\BepInEx\plugins
