@@ -5,6 +5,13 @@ Emphasis on the buggy part. Never touched Visual Studio, let alone built a Class
 This mod is made for the 4.0.1 version of Casualties: Unknown, which is currently the latest version on the game's [Itch page](https://orsonik.itch.io/scav-prototype). Make sure this is the version of the game you have before continuing.<br>
 Downloadable [here](https://orsonik.itch.io/scav-prototype/download/eyJpZCI6MzIxNDQzOSwiZXhwaXJlcyI6MTc1ODgyMzQ4MX0%3d.bWj9Lv6KdmVaMJsIHZOA5Bqq0%2bg%3d) for free. Highly recommend you support the developer, or buy the game on Steam once it releases at the very least.
 
+For debugging purposes, I highly recommend you set 2 of BepInEx's configs to be as such (both fall under the `[Logging.Console]`) section
+```ini
+Enabled = true
+LogLevels = All
+```
+This is re-iterated with a picture in the installation guide file [here](INSTALL.md), so just double-check there if you aren't 100% sure.
+
 # Installation
 For more in-depth installation instructions with images, see [INSTALL.md](INSTALL.md).
 - Download [BepInEx](https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.4), unpack in your game directory, remove non-core files if you wish.
