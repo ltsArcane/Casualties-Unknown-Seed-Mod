@@ -67,7 +67,7 @@ public class Main : BaseUnityPlugin
         LoggerInstance.LogDebug($"Main: > FastNoiseLiteConstructorPrefix...");
         Harmony.CreateAndPatchAll(typeof(FastNoiseLiteConstructorPrefix));
 
-        LoggerInstance.LogDebug($"Main: > FastNoiseLiteConstructorPrefix...");
+        LoggerInstance.LogDebug($"Main: > WorldGenerationDistributeEntitiesPrefix...");
         Harmony.CreateAndPatchAll(typeof(WorldGenerationDistributeEntitiesPrefix));
 
         LoggerInstance.LogInfo($"Main: Harmony patches successful. Mod successfully initialised.");
