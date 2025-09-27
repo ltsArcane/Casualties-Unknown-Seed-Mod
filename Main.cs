@@ -52,9 +52,11 @@ public class Main : BaseUnityPlugin
 
         LoggerInstance.LogDebug($"Main: > SeedState...");
         SeedState.Init(seedHash);
+
         LoggerInstance.LogInfo($"Main: Initialisation successful.\n");
 
         LoggerInstance.LogInfo($"Main: Creating Harmony patches and patching necessary methods...");
+
         LoggerInstance.LogDebug($"Main: > WorldGenerationerationAwakePrefix...");
         Harmony.CreateAndPatchAll(typeof(WorldGenerationerationAwakePrefix)); 
         
@@ -104,6 +106,7 @@ public class WorldGenerationDistributeEntitiesPrefix
 {
     static void Prefix()
     {
+        Main.LoggerInstance.LogDebug($"WorldGenerationDistributeEntitiesPatch: Requesting counter increment...");
         int subSeed = SeedState.NextSeed();
         Main.LoggerInstance.LogDebug($"WorldGenerationDistributeEntitiesPatch: Setting UnityEngine Random InitState to hashed sub seed \"{subSeed}\"...");
         UnityEngine.Random.InitState(subSeed);
