@@ -108,6 +108,7 @@ public class WorldGenerationDistributeEntitiesPrefix
     {
         Main.LoggerInstance.LogDebug($"WorldGenerationDistributeEntitiesPatch: Requesting counter increment...");
         int subSeed = SeedState.NextSeed();
+
         Main.LoggerInstance.LogDebug($"WorldGenerationDistributeEntitiesPatch: Setting UnityEngine Random InitState to hashed sub seed \"{subSeed}\"...");
         UnityEngine.Random.InitState(subSeed);
     }
@@ -120,6 +121,7 @@ public class FastNoiseLiteConstructorPrefix
     {
         Main.LoggerInstance.LogDebug($"FastNoiseLiteConstructorPatch: Requesting counter increment...");
         int subSeed = SeedState.NextSeed();
+
         Main.LoggerInstance.LogDebug($"FastNoiseLiteConstructorPatch: Setting UnityEngine Random InitState to hashed sub seed \"{subSeed}\"...");
         UnityEngine.Random.InitState(subSeed);
     }
