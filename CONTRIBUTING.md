@@ -11,6 +11,9 @@ But yeah. Re-iterating: I'm not much of a game developer / modder, so rules will
 4. Push your changes, then submit a pull request.
 
 # Reporting Issues and Questions?
-<p align="center"> <i>PLLEEAASSEE</i> include a detailed description <br><b>---> !!! and steps to reproduce !!! <---</b><br> </p>
-Things like dealing with Issues isn't really in my forte, but if that's how you'd prefer to bring up the problem, then there you go.<br>
-I'd much rather prefer reports via Discord DMs (ltsarcane), pinging me in Orsoniks' studio (preferably #cas-unknown, just don't mention modding directly), etcetera, so we can chat and deal with the problem in real time.<br>
+<p align="center"> <i>PLLEEAASSEE</i> include a detailed description <br><b>---> !!! and steps to reproduce !!! <---</b></p>
+
+  
+Things like dealing with Issues isn't really in my forte, but if that's how you'd prefer to bring up the problem, then there you go.
+
+I'd much rather prefer reports via Discord DMs (ltsarcane), pinging me in Orsoniks' studio (preferably #cas-unknown, just don't mention modding directly), etcetera, so we can chat and deal with whatever problem you found in real time. Will (probably) make both of our lives easier.<br>
