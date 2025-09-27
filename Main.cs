@@ -117,15 +117,14 @@ public class WorldGenerationDistributeEntitiesPrefix
     }
 }
 
-// Replace whatever seed the game would have passed (Unity RNG) with BaseSeed + counter.
 [HarmonyPatch(typeof(FastNoiseLite), MethodType.Constructor, new Type[] { typeof(int) })]
 public class FastNoiseLiteConstructorPrefix
 {
-    static void Prefix(ref int seed)
+    static void Prefix()
     {
-        Main.LoggerInstance.LogDebug($"FastNoiseLite: Requesting counter increment...");
+        Main.LoggerInstance.LogDebug($"FastNoiseLiteConstructorPatch: Requesting counter increment...");
         int subSeed = SeedState.NextSeed();
-        Main.LoggerInstance.LogDebug($"FastNoiseLite: Replacing random value \"{seed}\" with hashed sub seed \"{subSeed}\"...");
-        seed = subSeed;
+        Main.LoggerInstance.LogDebug($"FastNoiseLiteConstructorPatch: Setting UnityEngine Random InitState to hashed sub seed \"{subSeed}\"...");
+        UnityEngine.Random.InitState(subSeed);
     }
 }
