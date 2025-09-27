@@ -49,10 +49,7 @@ public class Main : BaseUnityPlugin
         LoggerInstance.LogInfo($"Main: Seed hash is \"{seedHash}\" This is what will be used for making generation deterministic.\n");
 
         LoggerInstance.LogInfo($"Main: Initialising and setting seed hash as patch variables...");
-        LoggerInstance.LogDebug($"Main: > WorldGenerationerationAwakePrefix...");
-        WorldGenerationerationAwakePrefix.SeedHash = seedHash;
-        LoggerInstance.LogDebug($"Main: > WorldGenerationerationGenerateWorldPrefix...");
-        WorldGenerationerationGenerateWorldPrefix.SeedHash = seedHash;
+
         LoggerInstance.LogDebug($"Main: > SeedState...");
         SeedState.Init(seedHash);
         LoggerInstance.LogInfo($"Main: Initialisation successful.\n");
@@ -78,12 +75,10 @@ public class Main : BaseUnityPlugin
 [HarmonyPatch(typeof(WorldGeneration), "Awake")]
 public class WorldGenerationerationAwakePrefix
 {
-    public static int SeedHash; // Always ensure Seed is set before patching.
-
     static void Prefix()
     {
-        Main.LoggerInstance.LogDebug($"WorldGenerationAwakePatch: Setting UnityEngine Random InitState to {SeedHash!}.");
-        UnityEngine.Random.InitState(SeedHash);
+        Main.LoggerInstance.LogDebug($"WorldGenerationAwakePatch: Setting UnityEngine Random InitState to {SeedState.CurrentSeed()}.");
+        UnityEngine.Random.InitState(SeedState.CurrentSeed());
 
         Main.LoggerInstance.LogDebug($"WorldGenerationAwakePatch: Requesting counter reset...");
         SeedState.ResetCounter();
@@ -94,12 +89,10 @@ public class WorldGenerationerationAwakePrefix
 [HarmonyPatch(typeof(WorldGeneration), "GenerateWorld")]
 public class WorldGenerationerationGenerateWorldPrefix
 {
-    public static int SeedHash; // Always ensure Seed is set before patching.
-
     static void Prefix()
     {
-        Main.LoggerInstance.LogDebug($"WorldGenerationGenerateWorldPatch: Setting UnityEngine Random InitState to {SeedHash!}.");
-        UnityEngine.Random.InitState(SeedHash);
+        Main.LoggerInstance.LogDebug($"WorldGenerationGenerateWorldPatch: Setting UnityEngine Random InitState to {SeedState.CurrentSeed()}.");
+        UnityEngine.Random.InitState(SeedState.CurrentSeed());
 
         Main.LoggerInstance.LogDebug($"WorldGenerationGenerateWorldPatch: Requesting counter reset...");
         SeedState.ResetCounter();

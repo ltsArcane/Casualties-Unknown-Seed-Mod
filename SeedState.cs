@@ -18,6 +18,11 @@ public static class SeedState
         Main.LoggerInstance.LogDebug($"SeedState: counter of value \"{counter}\" successfully reset.");
         Interlocked.Exchange(ref counter, 0);
     }
+    public static int CurrentSeed()
+    {
+        return unchecked(SeedHash);
+    }
+
     public static int NextSeed()
     {
         Main.LoggerInstance.LogDebug($"SeedState: Counter incremented to \"{counter + 1}\".");
