@@ -19,15 +19,22 @@ For more in-depth installation instructions with images, see [INSTALL.md](INSTAL
 - Drag-and-drop the downloaded DLL file into `CasualtiesUnknown\BepInEx\plugins`.
 - Go to `C:\Users\[YOUR NAME HERE]\AppData\LocalLow\Orsoniks\CasualtiesUnknown`, and create a file called `seed.txt`. Give it something random, or leave it blank. Just make sure to create it.
 
-# Warning
+# Bug #1 (IMPORTANT)
 
-**THERE IS A SMALL, BUT DEFINITE, CHANCE THAT INSTANCES MAY NOT LOOK THE SAME DESPITE USING THE SAME SEED. RE-START THE RUN, AND IT SHOULD FIX ITSELF.** <br>
+<p align="center"><b>THERE IS A VERY HIGH CHANCE THAT NEWLY OPENED INSTANCES INITIALISE WEIRDLY WITH JANKY INIT STATES, MESSING WITH THE MOD IN SUCH A WAY THAT CAN'T BE RELIABLY REPLICATED OR SHOWN VIA LOGS.</b></p>
 
-<p align="center"><img width="185" height="50" alt="image" src="https://github.com/user-attachments/assets/9d982dce-3bcb-4c16-9aa3-13894560d073" /></p><br>
-If it still doesn't fix, try restarting the game. Keep doing so until the very tiles and plant generation of both instances look the same. Shouldn't take too many attempts, usually just 1 restart.
+If this happens, try hitting <img alt="Start run button" src="https://github.com/user-attachments/assets/22b85ab9-baf9-41cc-b9f1-2377ddcfdc4f" height="11" style="vertical-align:centre;"/> again.
 
-# Endnote
+If not, restart the game. One restart should fix it, as the instances opened thereafter should mend properly with the mod.
 
-I'm not too sure why, but every so now and then, the randomness generated from a seed seems to just decide to re-generate itself, as if the seed is something completely different.
-One day you're playing the same map over and over, the next day, it's completely different. I do not know why this happens, and I'm too lazy to debug every single UnityEngine.Random call to figure out why.
+# Bug #2 <i>(not as important)</i>
+
+I'm not too sure why, but every so now and then, the randomness generated from a seed seems to just decide to set entirely new randomness, as if the seed is something completely different.
+
+One day you're playing the same map over and over, the next day, it's completely different. Sometimes, it'll seemingly reset itself back to an old state that you may have played on before. 
+
+I don't know why this happens, and it honestly has so little impact on the main use case of this mod, that I will not be worrying about it for the timebeing, if at all.
+
+# Footnote
+
 This is probably the most I'm going to do, don't expect much else.
