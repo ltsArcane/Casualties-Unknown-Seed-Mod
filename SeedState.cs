@@ -9,7 +9,7 @@ public static class SeedState
     {
         SeedHash = seedHash;
         Main.LoggerInstance.LogDebug($"SeedState: SeedState initialised with hashed seed \"{seedHash}\".");
-        Interlocked.Exchange(ref counter, 0);
+        ResetCounter();
         Main.LoggerInstance.LogDebug($"SeedState: Counter initialised.");
     }
 
