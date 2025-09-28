@@ -2,15 +2,16 @@ using System.Threading;
 
 public static class SeedState
 {
-    public static int SeedHash;
+    public static string Seed = "";
     private static int counter = 0;
 
-    public static void Init(int seedHash)
+    public static void Init(string seed)
     {
-        SeedHash = seedHash;
-        Main.LoggerInstance.LogDebug($"SeedState: SeedState initialised with hashed seed \"{seedHash}\".");
+        Seed = seed;
+        Main.LoggerInstance.LogDebug($"SeedState: Initialised with seed \"{Seed}\".");
+        Main.LoggerInstance.LogDebug($"SeedState: Hashed seed value set to \"{Seed.GetHashCode()}\".");
+        Main.LoggerInstance.LogDebug($"SeedState: Initialising counter...");
         ResetCounter();
-        Main.LoggerInstance.LogDebug($"SeedState: Counter initialised.");
     }
 
     public static void ResetCounter()
@@ -18,11 +19,11 @@ public static class SeedState
         Main.LoggerInstance.LogDebug($"SeedState: counter of value \"{counter}\" successfully reset.");
         Interlocked.Exchange(ref counter, 0);
     }
-    public static int CurrentSeed() => unchecked(SeedHash);
+    public static int CurrentSeed() => unchecked(Seed.GetHashCode());
 
     public static int NextSeed()
     {
         Main.LoggerInstance.LogDebug($"SeedState: Counter incremented to \"{counter + 1}\".");
-        return unchecked(SeedHash + Interlocked.Increment(ref counter));
+        return unchecked(Seed.GetHashCode() + Interlocked.Increment(ref counter));
     }
 }
