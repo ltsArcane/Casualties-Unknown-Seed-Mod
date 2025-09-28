@@ -12,6 +12,39 @@ LogLevels = All
 ```
 This is re-iterated with a picture in the installation guide file [here](INSTALL.md), so just double-check there if you aren't 100% sure.
 
+# What This Mod Does
+This mod forces *Casualties: Unknown* to use a consistent seed for world generation, allowing maps and entity placement to be repeatable across runs.
+
+* It reads a `seed.txt` file from the game’s save/config folder.
+* If the file is empty, the mod generates a seed automatically and writes it to the file. No file = no mod.
+* All world generation systems (map layout, noise functions, entity distribution, etcetera) are patched to use this seed, ensuring deterministic results.
+* Sub-seeds are created during generation steps so the game behaves consistently, while still having variation between different processes (otherwise you'd see recurrent patterns).
+
+**In short:** with this mod, you can control or lock world randomness. Using the same seed will always generate the same world, letting you replay identical scenarios or share seeds with others.
+
+# How It Works (Technical Overview)
+
+*This section is the optional "stats for nerds." Here for those curious about implementation details. Assumes you've already read "What This Mod Does".*
+
+The mod uses [Harmony](https://github.com/pardeike/Harmony) patches to hook into *Casualties: Unknown*’s world generation methods and force them to use a deterministic seed.
+
+### Core Logic
+* A `SeedHash` is computed based on `seed.txt` file's contents, or `DateTime.Now.Ticks` if said file is empty. Latter is written back to the file.
+* A `SeedState` class to manage the active seed and an incrementing counter for generating sub-seeds.
+
+### Patches
+* **`WorldGeneration.Awake()`**: Initializes the Unity random state with the main seed and resets the counter.
+* **`WorldGeneration.GenerateWorld()`**: Ensures each new world uses the same deterministic seed sequence.
+* **`WorldGeneration.DistributeEntities()`**: Increments the counter to generate sub-seeds for entity placement.
+* **`FastNoiseLite(int constructor)`**: Increments the counter to generate sub-seeds for noise generation.
+
+### Why This Matters
+By re-seeding Unity’s `Random` consistently across these generation steps, the game world becomes **deterministic**.
+* Running the game with the same `seed.txt` will always produce the same map and entity layout.
+* Sub-seeding keeps different generation processes independent but still tied to the master seed.
+
+This setup allows repeatable scenarios, easier debugging, and the ability to share seeds with others while preserving consistency.
+
 # Installation
 For more in-depth installation instructions with images, see [INSTALL.md](INSTALL.md).
 - Download [BepInEx](https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.4), unpack in your game directory, remove non-core files if you wish.
