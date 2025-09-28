@@ -74,8 +74,8 @@ public class WorldGenerationerationAwakePrefix
 {
     static void Prefix()
     {
-        Main.LoggerInstance.LogDebug($"WorldGenerationAwakePatch: Setting UnityEngine Random InitState to {SeedState.Seed.GetHashCode()}.");
-        UnityEngine.Random.InitState(SeedState.Seed.GetHashCode());
+        Main.LoggerInstance.LogDebug($"WorldGenerationAwakePatch: Setting UnityEngine Random InitState to {SeedState.GetHashedSeed()}.");
+        UnityEngine.Random.InitState(SeedState.GetHashedSeed());
 
         Main.LoggerInstance.LogDebug($"WorldGenerationAwakePatch: Requesting counter reset...");
         SeedState.ResetCounter();
@@ -88,8 +88,8 @@ public class WorldGenerationerationGenerateWorldPrefix
 {
     static void Prefix()
     {
-        Main.LoggerInstance.LogDebug($"WorldGenerationGenerateWorldPatch: Setting UnityEngine Random InitState to {SeedState.Seed.GetHashCode()}.");
-        UnityEngine.Random.InitState(SeedState.Seed.GetHashCode());
+        Main.LoggerInstance.LogDebug($"WorldGenerationGenerateWorldPatch: Setting UnityEngine Random InitState to {SeedState.GetHashedSeed()}.");
+        UnityEngine.Random.InitState(SeedState.GetHashedSeed());
 
         Main.LoggerInstance.LogDebug($"WorldGenerationGenerateWorldPatch: Requesting counter reset...");
         SeedState.ResetCounter();
@@ -102,7 +102,8 @@ public class WorldGenerationDistributeEntitiesPrefix
     static void Prefix()
     {
         Main.LoggerInstance.LogDebug($"WorldGenerationDistributeEntitiesPatch: Requesting counter increment...");
-        int subSeed = SeedState.NextSeed();
+        SeedState.IncrementCounter();
+        int subSeed = SeedState.GetIncrementedSeedHash();
 
         Main.LoggerInstance.LogDebug($"WorldGenerationDistributeEntitiesPatch: Setting UnityEngine Random InitState to hashed sub seed \"{subSeed}\"...");
         UnityEngine.Random.InitState(subSeed);
@@ -115,7 +116,8 @@ public class FastNoiseLiteConstructorPrefix
     static void Prefix()
     {
         Main.LoggerInstance.LogDebug($"FastNoiseLiteConstructorPatch: Requesting counter increment...");
-        int subSeed = SeedState.NextSeed();
+        SeedState.IncrementCounter();
+        int subSeed = SeedState.GetIncrementedSeedHash();
 
         Main.LoggerInstance.LogDebug($"FastNoiseLiteConstructorPatch: Setting UnityEngine Random InitState to hashed sub seed \"{subSeed}\"...");
         UnityEngine.Random.InitState(subSeed);

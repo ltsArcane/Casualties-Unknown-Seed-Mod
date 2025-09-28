@@ -9,7 +9,7 @@ public static class SeedState
     {
         Seed = seed;
         Main.LoggerInstance.LogDebug($"SeedState: Initialised with seed \"{Seed}\".");
-        Main.LoggerInstance.LogDebug($"SeedState: Hashed seed value set to \"{Seed.GetHashCode()}\".");
+        Main.LoggerInstance.LogDebug($"SeedState: Hashed seed value set to \"{GetHashedSeed()}\".");
         Main.LoggerInstance.LogDebug($"SeedState: Initialising counter...");
         ResetCounter();
     }
@@ -19,11 +19,15 @@ public static class SeedState
         Main.LoggerInstance.LogDebug($"SeedState: counter of value \"{counter}\" successfully reset.");
         Interlocked.Exchange(ref counter, 0);
     }
-    public static int CurrentSeed() => unchecked(Seed.GetHashCode());
 
-    public static int NextSeed()
+    public static void IncrementCounter()
     {
         Main.LoggerInstance.LogDebug($"SeedState: Counter incremented to \"{counter + 1}\".");
-        return unchecked(Seed.GetHashCode() + Interlocked.Increment(ref counter));
+        Interlocked.Increment(ref counter);
     }
+
+    public static string GetSeed() => Seed;
+    public static int GetHashedSeed() => unchecked(Seed.GetHashCode());
+    public static int GetIncrementedSeedHash() => unchecked(GetHashedSeed() + counter);
+    
 }
