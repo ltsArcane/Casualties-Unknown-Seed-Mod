@@ -10,7 +10,7 @@ For debugging purposes, I highly recommend you set 2 of BepInEx's configs to be 
 Enabled = true
 LogLevels = All
 ```
-This is re-iterated with a picture in the installation guide file [here](INSTALL.md), so just double-check there if you aren't 100% sure.
+This is re-iterated with a picture in the installation guide file [here](INSTALLATION.md), so just double-check there if you aren't 100% sure.
 
 ### !WARNING!
 STILL IN THE WORKS! There's a lot of inconsistencies due to how Unity executes scripts, so even syncing the randomness of a non-random class returns wonky results for whatever reason.
@@ -55,7 +55,7 @@ By re-seeding Unity’s `Random` consistently across these generation steps, the
 This setup allows repeatable scenarios, easier debugging, and the ability to share seeds with others while preserving consistency.
 
 # Installation
-For more in-depth installation instructions with images, see [INSTALL.md](INSTALL.md).
+For more in-depth installation instructions with images, see [INSTALLATION.md](INSTALLATION.md).
 - Download [BepInEx](https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.4), unpack in your game directory, remove non-core files if you wish.
 - **Run the game once.** BepInEx needs to initialise some folders.
 - Drag-and-drop the downloaded DLL file into `CasualtiesUnknown\BepInEx\plugins`.
