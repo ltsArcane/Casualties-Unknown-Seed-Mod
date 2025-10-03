@@ -22,12 +22,13 @@ public class Main : BaseUnityPlugin
         string pathToFile = Application.persistentDataPath.Replace("/", "\\");
         string pathOfFile = Path.Combine(pathToFile, "seed.txt");
 
-        LoggerInstance.LogMessage($"For more log info, set LogLevels to All.");
-        LoggerInstance.LogMessage($"SeedMod is now active. Fetching seed...");
+        LoggerInstance.LogMessage($"For more log info, set LogLevels to All.\n");
+        LoggerInstance.LogMessage($"SeedMod is now active.");
         LoggerInstance.LogInfo($"Path to seed text file: {new Uri(pathToFile).AbsoluteUri}.");
         LoggerInstance.LogDebug($"Checking if file exists...");
 
-        if (!File.Exists(pathOfFile))
+        if (File.Exists(pathOfFile)) LoggerInstance.LogInfo($"File found.");
+        else
         {
             LoggerInstance.LogError($"File does not exist, ending mod instance...");
             LoggerInstance.LogError($"Please create a seed text file at {new Uri(pathToFile).AbsoluteUri} to continue.\n");
@@ -43,17 +44,17 @@ public class Main : BaseUnityPlugin
             File.WriteAllText(pathOfFile, seed);
 
             LoggerInstance.LogError($"Seed text file exists, but is empty...");
-            LoggerInstance.LogWarning($"Inserting DateTime.Now as a seed into the text file instead...");
+            LoggerInstance.LogWarning($"Inserting DateTime.Now.Ticks ({seed}) as a seed into the text file instead...");
             LoggerInstance.LogWarning($"The mod will run, but with a randomised seed...");
             LoggerInstance.LogWarning($"Note that this will impact future gameplay similar to how a predefined seed would.\n");
         }
 
         LoggerInstance.LogInfo($"Seed \"{seed}\" successfully acquired.");
-        LoggerInstance.LogInfo($"Seed hash is \"{seed.GetHashCode()}\" This is what will be used for making generation deterministic.\n");
+        LoggerInstance.LogInfo($"Seed hash is \"{seed.GetHashCode()}\". This is what will be used for making generation deterministic.\n");
         
         LoggerInstance.LogDebug($"Initialising SeedState logger..."); // Important to do this before using SeedState, so that the loggers are ready to go.
         SeedState.InitLogger();
-        LoggerInstance.LogDebug($"Initialised.");
+        LoggerInstance.LogDebug($"Initialised.\n");
 
         LoggerInstance.LogInfo($"State-securing acquired seed...");
         SeedState.Init(seed);
@@ -81,7 +82,7 @@ public class Main : BaseUnityPlugin
         Harmony.CreateAndPatchAll(typeof(WorldGenerationDistributeEntitiesPrefix));
         LoggerInstance.LogInfo($"Harmony patches successful.\n");
 
-        LoggerInstance.LogMessage($"SeedMod successfully initialised.");
+        LoggerInstance.LogMessage($"SeedMod successfully initialised.\n");
     }
 }
     
@@ -95,11 +96,11 @@ public class WorldGenerationerationAwakePrefix
 
     static void Prefix()
     {
-        LoggerInstance.LogDebug($"Setting UnityEngine Random InitState to {SeedState.SeedHash}.");
-        UnityEngine.Random.InitState(SeedState.SeedHash);
-
         LoggerInstance.LogDebug($"Requesting counter reset...");
         SeedState.ResetCounter();
+
+        LoggerInstance.LogDebug($"Setting UnityEngine Random InitState to hashed sub seed {SeedState.SeedHash}...\n");
+        UnityEngine.Random.InitState(SeedState.SeedHash);
     }
 }
 
@@ -112,11 +113,12 @@ public class WorldGenerationerationGenerateWorldPrefix
     public static void InitializeLogger() => LoggerInstance = new PrefixedLogger(Main.BaseLogger, typeof(WorldGenerationerationGenerateWorldPrefix));
     static void Prefix()
     {
-        LoggerInstance.LogDebug($"Setting UnityEngine Random InitState to {SeedState.SeedHash}.");
-        UnityEngine.Random.InitState(SeedState.SeedHash);
-
         LoggerInstance.LogDebug($"Requesting counter reset...");
         SeedState.ResetCounter();
+
+        LoggerInstance.LogDebug($"Setting UnityEngine Random InitState to hashed sub seed {SeedState.SeedHash}...\n");
+        UnityEngine.Random.InitState(SeedState.SeedHash);
+
     }
 }
 
@@ -132,7 +134,7 @@ public class WorldGenerationDistributeEntitiesPrefix
         SeedState.IncrementCounter();
         int subSeed = SeedState.GetIncrementedSeedHash();
 
-        LoggerInstance.LogDebug($"Setting UnityEngine Random InitState to hashed sub seed \"{subSeed}\"...");
+        LoggerInstance.LogDebug($"Setting UnityEngine Random InitState to hashed sub seed \"{subSeed}\".\n");
         UnityEngine.Random.InitState(subSeed);
     }
 }
@@ -149,7 +151,7 @@ public class FastNoiseLiteConstructorPrefix
         SeedState.IncrementCounter();
         int subSeed = SeedState.GetIncrementedSeedHash();
 
-        LoggerInstance.LogDebug($"Setting UnityEngine Random InitState to hashed sub seed \"{subSeed}\"...");
+        LoggerInstance.LogDebug($"Setting UnityEngine Random InitState to hashed sub seed \"{subSeed}\".\n");
         UnityEngine.Random.InitState(subSeed);
     }
 }
