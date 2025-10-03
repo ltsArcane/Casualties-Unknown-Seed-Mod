@@ -9,7 +9,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="Assembly-CSharp">
-		  <HintPath>lib\Assembly-CSharp.dll</HintPath>
+			<HintPath>lib\Assembly-CSharp.dll</HintPath>
 		</Reference>
 		<Reference Include="BepInEx">
 			<HintPath>lib\BepInEx.dll</HintPath>

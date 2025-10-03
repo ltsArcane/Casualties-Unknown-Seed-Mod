@@ -5,7 +5,7 @@ using UnityEngine;
 using HarmonyLib;
 using BepInEx.Logging;
 
-[BepInPlugin("com.example.seedmod", "Seed Mod", "1.0.0")]
+[BepInPlugin("com.casunknown.seedmod", "Seed Mod", "1.0.0")]
 public class Main : BaseUnityPlugin
 {
     public static ManualLogSource BaseLogger = null!;
@@ -34,7 +34,7 @@ public class Main : BaseUnityPlugin
             LoggerInstance.LogError($"Please create a seed text file at {new Uri(pathToFile).AbsoluteUri} to continue.\n");
             return;
         }
-
+        
         LoggerInstance.LogDebug($"Acquiring seed...");
         string seed = File.ReadAllText(pathOfFile).Trim();
 
@@ -69,6 +69,8 @@ public class Main : BaseUnityPlugin
         FastNoiseLiteConstructorPrefix.InitializeLogger();
         LoggerInstance.LogDebug($"> WorldGenerationDistributeEntitiesPrefix...");
         WorldGenerationDistributeEntitiesPrefix.InitializeLogger();
+        LoggerInstance.LogDebug($"> WorldGenerationPlaceCrystalsPrefix...");
+        WorldGenerationPlaceCrystalsPrefix.InitializeLogger();
         LoggerInstance.LogInfo($"Harmony logs successfully initialised.\n");
 
         LoggerInstance.LogInfo($"Creating Harmony patches and patching necessary methods...");
@@ -80,6 +82,8 @@ public class Main : BaseUnityPlugin
         Harmony.CreateAndPatchAll(typeof(FastNoiseLiteConstructorPrefix));
         LoggerInstance.LogDebug($"> WorldGenerationDistributeEntitiesPrefix...");
         Harmony.CreateAndPatchAll(typeof(WorldGenerationDistributeEntitiesPrefix));
+        LoggerInstance.LogDebug($"> WorldGenerationPlaceCrystalsPrefix...");
+        Harmony.CreateAndPatchAll(typeof(WorldGenerationPlaceCrystalsPrefix));
         LoggerInstance.LogInfo($"Harmony patches successful.\n");
 
         LoggerInstance.LogMessage($"SeedMod successfully initialised.\n");
@@ -128,6 +132,25 @@ public class WorldGenerationDistributeEntitiesPrefix
     private static PrefixedLogger LoggerInstance = null!;
 
     public static void InitializeLogger() => LoggerInstance = new PrefixedLogger(Main.BaseLogger, typeof(WorldGenerationDistributeEntitiesPrefix));
+    static void Prefix(GameObject basObj)
+    {
+        LoggerInstance.LogDebug($"Requesting counter increment...");
+        SeedState.IncrementCounter();
+        int subSeed = SeedState.GetIncrementedSeedHash();
+
+        LoggerInstance.LogDebug($"Setting UnityEngine Random InitState to hashed sub seed \"{subSeed}\"...");
+        UnityEngine.Random.InitState(subSeed);
+
+        LoggerInstance.LogDebug($"Distributing GameObject \"{basObj.name}\"...\n");
+    }
+}
+
+[HarmonyPatch(typeof(WorldGeneration), nameof(WorldGeneration.PlaceCrystals))]
+public class WorldGenerationPlaceCrystalsPrefix
+{
+    private static PrefixedLogger LoggerInstance = null!;
+
+    public static void InitializeLogger() => LoggerInstance = new PrefixedLogger(Main.BaseLogger, typeof(WorldGenerationPlaceCrystalsPrefix));
     static void Prefix()
     {
         LoggerInstance.LogDebug($"Requesting counter increment...");
